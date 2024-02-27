@@ -1,0 +1,52 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: white;
+}
+
+body {
+    background: rgba(5, 41, 44, 0.9);
+}
+
+p {
+    color: #000;
+    margin-bottom: 2px;
+}
+
+a {
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.errormsg,
+.errormsg1,
+.errormsg2 {
+    color: red;
+    font-style: italic;
+}
+
+.delete {
+    color: rgb(255, 50, 50);
+}
+
+.form-highligh {
+    display: none;
+}
+
+.form-highligh.error,
+.form-highligh.success {
+    display: block;
+}
+
+.form-highligh.error h2 {
+    color: red;
+}
+
+.form-highligh.success h2 {
+    color: rgb(6, 182, 26);
+}
+
+.card {
+    height: 100%;
+}

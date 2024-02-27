@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Read Page</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="student-container">
+      <div class="container">
+        <div class="row my-5 justify-content-between align-items-center">
+          <div class="col-md-5">
+            <h1>All Data from DB</h1>
+          </div>
+          <div class="col-md-5 text-end">
+            <button class="btn btn-success">
+              <a href="/create" class="text-white">Create</a>
+            </button>
+          </div>
+        </div>
+        <div class="row gy-3">
+          
+          <% result.map((student)=>{ %>
+          <div class="col-md-4">
+            <div class="card">
+              <div class="card-body">
+                <% const {name,roll,classs,email,phone,id} = student %>
+                <h5 class="card-title">Name: <%=name %></h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">
+                  Class: <%=classs %>
+                </h6>
+                <p class="card-text">Roll: <%=roll %></p>
+                <p class="card-text">Email: <%=email %></p>
+                <% if(phone){ %>
+                <p class="card-text">Phone: <%=phone %></p>
+                <% } %>
+                <a href="/update?id=<%= id %>" class="update card-link">Edit</a>
+                <a
+                  href="/delete?id=<%= id %>"
+                  data-delete="<%= id %>"
+                  class="delete card-link"
+                  >Delete</a
+                >
+              </div>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.js"
+      integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>
