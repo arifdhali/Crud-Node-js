@@ -1,28 +1,42 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const cards = document.querySelectorAll(".card");
-    cards.forEach((card) => {
-        const deleteBtn = card.querySelector(".delete");
-        deleteBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            const urlParams = new URLSearchParams(window.location.search);
-            const id = urlParams.get("id");
-            let dConf = confirm("Are you sure you want to delete");
-            if (dConf) {
-                $.ajax({
-                    url: `/delete?id=${id}`,
-                    type: "GET",
-                    success: function (data) {
-                        if (data.error) {
-                            alert(data.error);
-                        } else {
-                            card.remove();
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("Error:", error);
-                    }
-                });
-            }
-        });
+const deleteLinks = document.querySelectorAll('.delete-link');
+const modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+
+deleteLinks.forEach(link => {
+    link.addEventListener('click', function (event) {
+        event.preventDefault();
+        const id = this.getAttribute('data-delete');
+        const deleteBtn = document.getElementById('deleteBtn');
+        deleteBtn.dataset.id = id;
+        modal.show();
     });
 });
+
+const deleteBtn = document.getElementById('deleteBtn');
+deleteBtn.addEventListener('click', function () {
+    const id = this.dataset.id;
+
+    // send request to the server
+    fetch(`/delete/${id}`, {
+        method: 'get'
+    })
+        .then(response => {
+            console.log(response);
+            if (!response.ok) {
+                throw new Error('Failed to delete user');
+            }
+            return response.json();
+        })
+        .then(result => {
+            console.log('User deleted successfully');
+            modal.hide();
+        })
+        .catch(error => {
+            console.error('Error deleting user:', error.message);
+        });
+
+    console.log('Deleting user with ID:', id);
+    modal.hide();
+});
+
+
+

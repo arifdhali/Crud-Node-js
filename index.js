@@ -3,7 +3,6 @@ const app = express();
 const path = require('path');
 const dotenv = require('dotenv').config();
 const connection = require('./db/db-config');
-const { render } = require('ejs');
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -32,7 +31,7 @@ app.post("/create", (req, res) => {
     if (!name || !classs || !roll) {
         return res.status(404).json({ error: "Please enter required field" });
     }
-    let sql = 'INSERT INTO student_details(name,class,roll,email,phone) values(?,?,?,?,?)';
+    let sql = 'INSERT INTO student_details(name,classs,roll,email,phone) values(?,?,?,?,?)';
     connection.query(sql, [name, classs, roll, email, number], (err, result) => {
         if (err) {
             console.log("Error on inserting data:", err);
@@ -42,7 +41,6 @@ app.post("/create", (req, res) => {
             res.render("create");
         }
     })
-
 
 })
 
@@ -58,9 +56,9 @@ app.get("/read", (req, res) => {
 })
 
 // delete
-app.get("/delete", (req, res) => {
+app.get("/delete/:id", (req, res) => {
     let deletSql = 'DELETE FROM student_details WHERE id=?;'
-    connection.query(deletSql, [req.query.id], (err, result) => {
+    connection.query(deletSql, [req.params.id], (err, result) => {
         if (err) {
             return res.status(404).json({ message: err.message });
         } else {
@@ -71,7 +69,7 @@ app.get("/delete", (req, res) => {
 
 app.post("/update-data", (req, res) => {
     const { name, classs, roll, email, phone, hidden_id } = req.body;
-    let sql = 'UPDATE student_details SET name = ?, class = ?, roll = ?, email = ?, phone = ? WHERE id = ?';
+    let sql = 'UPDATE student_details SET name = ?, classs = ?, roll = ?, email = ?, phone = ? WHERE id = ?';
     connection.query(sql, [name, classs, roll, email, phone, hidden_id], (err, result) => {
         if (err) {
             console.error("Error updating data:", err);
